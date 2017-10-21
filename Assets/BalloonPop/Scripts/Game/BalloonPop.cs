@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BalloonPop : MonoBehaviour {
 
+    public MouseHandler touchHandler;
     public Color[] colors;
     public Image image;
     public Text init;
@@ -15,21 +16,31 @@ public class BalloonPop : MonoBehaviour {
     // Use this for initialization
     void Start() {
         text = init;
-        active = colors[0];
-        StartCoroutine(Fade());
+       // active = colors[0];
+      //  StartCoroutine(Fade());
     }
 
-    IEnumerator Fade() {
-        int num = Random.Range(0, colors.Length);
-        active = colors[num];
-
-        image.color = active;
-        yield return new WaitForSeconds(5);
-        StartCoroutine(Fade());
+    void Update() {
+        if (touchHandler) {
+            if (touchHandler.GetObjectsBeingTouched().Length > 0) {
+                Debug.Log("touched");
+            }
+       
+        }
+   
     }
 
-    public Color RandomColor() {
-        int num = Random.Range(0, colors.Length);
-        return colors[num];
-    }
+    //IEnumerator Fade() {
+    //    int num = Random.Range(0, colors.Length);
+    //    active = colors[num];
+
+    //    image.color = active;
+    //    yield return new WaitForSeconds(5);
+    //    StartCoroutine(Fade());
+    //}
+
+    //public Color RandomColor() {
+    //    int num = Random.Range(0, colors.Length);
+    //    return colors[num];
+    //}
 }

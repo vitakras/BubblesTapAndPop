@@ -1,8 +1,9 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TouchHandler : MonoBehaviour, InputHandler {
+public class MouseHandler : MonoBehaviour, InputHandler {
 
     public GameObject[] GetObjectsBeingTouched() {
         List<GameObject> goList = new List<GameObject>();
@@ -10,15 +11,9 @@ public class TouchHandler : MonoBehaviour, InputHandler {
             return goList.ToArray();
         }
 
-        for (int i = 0; i < Input.touchCount; i++) {
-            Touch touch = Input.touches[i];
-            if (touch.phase == TouchPhase.Began) {
-                GameObject go = GetObjectBeingTouched(touch);
-
-                if (go != null) {
-                    goList.Add(go);
-                }
-            }
+        GameObject go = GetObjectBeingTouched();
+        if (go != null) {
+            goList.Add(go);
         }
 
         return goList.ToArray();
@@ -34,8 +29,8 @@ public class TouchHandler : MonoBehaviour, InputHandler {
         return false;
     }
 
-    GameObject GetObjectBeingTouched(Touch touch) {
-        Ray ray = Camera.main.ScreenPointToRay(touch.position);
+    GameObject GetObjectBeingTouched() {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {

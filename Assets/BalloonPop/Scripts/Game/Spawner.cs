@@ -26,7 +26,9 @@ public class Spawner : MonoBehaviour {
             go.SetActive(true);
 
             Float fl = go.GetComponent<Float>();
-            fl.UpdateColor(balloon.RandomColor());
+            if (fl) {
+             //   fl.UpdateColor(balloon.RandomColor());
+            }
         }
 
         StartCoroutine(Fade());
