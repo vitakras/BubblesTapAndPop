@@ -25,10 +25,7 @@ public class Spawner : MonoBehaviour {
             go.transform.position = (Vector3.left * pos) + (Vector3.up * -5f);
             go.SetActive(true);
 
-            Float fl = go.GetComponent<Float>();
-            if (fl) {
-             //   fl.UpdateColor(balloon.RandomColor());
-            }
+            
         }
 
         StartCoroutine(Fade());

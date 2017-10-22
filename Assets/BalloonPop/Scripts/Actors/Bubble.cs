@@ -1,14 +1,13 @@
 using UnityEngine;
 
-public class Balloon : MonoBehaviour {
+public class Bubble : MonoBehaviour {
 
-    Color color;
-    new SpriteRenderer renderer;
+    private Color color;
+    private new SpriteRenderer renderer;
 
     // Use this for initialization
     void Awake() {
         FindRenderer();
-        Color = color;
     }
 
     public Color Color {
