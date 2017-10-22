@@ -10,6 +10,7 @@ public class BubbleManager : MonoBehaviour {
 
     void Awake() {
         selectedColor = availableColors.PickRandomColor();
+        spawner.StartSpawner();
     }
 
     public void Pause() {
@@ -28,7 +29,16 @@ public class BubbleManager : MonoBehaviour {
         }
     }
 
-    public void UpdateBubbleColor(Bubble bubble) {
+    public void ConfigureBubble(GameObject go) {
+        Bubble bubble = go.GetComponent<Bubble>();
+        if (bubble == null) {
+            return;
+        }
+
+        UpdateBubbleColor(bubble);
+    }
+
+    void UpdateBubbleColor(Bubble bubble) {
         bubble.Color = availableColors.PickRandomColor();
     }
 }

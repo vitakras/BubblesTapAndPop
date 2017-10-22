@@ -54,6 +54,7 @@ public class Spawner : MonoBehaviour {
         float xSpawnRange = Random.Range(horizontalViewPortRange.x, horizontalViewPortRange.y);
         Vector3 position = Camera.main.ViewportToWorldPoint(new Vector3(xSpawnRange, 0f, 0f));
         position.y = this.transform.position.y;
+        position.z = 0f;
 
         return position;
     }

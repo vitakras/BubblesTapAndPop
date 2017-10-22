@@ -6,6 +6,7 @@ public class PooledPrefab : MonoBehaviour {
 
     public int minPooledAmount = 20;
     public GameObject prefab;
+    public GameObject parent;
 
     private Dictionary<int, GameObject> pooledObjects;
     private Stack<GameObject> availableObjects;
@@ -36,6 +37,7 @@ public class PooledPrefab : MonoBehaviour {
 
     GameObject CreateNewInstance() {
         GameObject go = GameObject.Instantiate(prefab);
+        go.transform.parent = parent.transform;
 
         PooledInstance pooledInstance = go.GetComponent<PooledInstance>();
         if (pooledInstance == null) {
