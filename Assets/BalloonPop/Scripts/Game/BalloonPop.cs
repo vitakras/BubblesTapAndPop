@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BalloonPop : MonoBehaviour {
 
-    public MouseHandler touchHandler;
+    public MouseInputHandler touchHandler;
     public Color[] colors;
     public Image image;
     public Text init;
@@ -23,7 +23,8 @@ public class BalloonPop : MonoBehaviour {
     void Update() {
         if (touchHandler) {
             if (touchHandler.GetObjectsBeingTouched().Length > 0) {
-                Debug.Log("touched");
+
+                //Debug.Log("touched");
             }
        
         }

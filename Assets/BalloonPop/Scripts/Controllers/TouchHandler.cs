@@ -35,10 +35,9 @@ public class TouchHandler : MonoBehaviour, InputHandler {
     }
 
     GameObject GetObjectBeingTouched(Touch touch) {
-        Ray ray = Camera.main.ScreenPointToRay(touch.position);
-
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit)) {
+        Vector2 origin = Camera.main.ScreenToWorldPoint(touch.position);
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.zero, 0f);
+        if (hit.collider != null) {
             return hit.collider.gameObject;
         }
 

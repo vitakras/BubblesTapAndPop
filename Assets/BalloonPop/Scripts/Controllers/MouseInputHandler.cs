@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MouseHandler : MonoBehaviour, InputHandler {
+public class MouseInputHandler : MonoBehaviour, InputHandler {
 
     public GameObject[] GetObjectsBeingTouched() {
         List<GameObject> goList = new List<GameObject>();
@@ -13,6 +13,7 @@ public class MouseHandler : MonoBehaviour, InputHandler {
 
         GameObject go = GetObjectBeingTouched();
         if (go != null) {
+            Debug.Log("fsdf");
             goList.Add(go);
         }
 
@@ -30,13 +31,13 @@ public class MouseHandler : MonoBehaviour, InputHandler {
     }
 
     GameObject GetObjectBeingTouched() {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit)) {
-            return hit.collider.gameObject;
+        if (Input.GetButtonDown("Fire1")) {
+            Vector2 origin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.zero, 0f);
+            if (hit.collider != null) {
+                return hit.collider.gameObject;
+            }
         }
-
         return null;
     }
 }
