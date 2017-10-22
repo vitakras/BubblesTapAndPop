@@ -5,13 +5,14 @@ using UnityEngine.UI;
 
 public class BalloonPop : MonoBehaviour {
 
-    public MouseInputHandler touchHandler;
     public Color[] colors;
     public Image image;
     public Text init;
 
     public static Color active;
     public static Text text;
+
+    private bool isGameRunning = false;
 
     // Use this for initialization
     void Start() {
@@ -21,15 +22,30 @@ public class BalloonPop : MonoBehaviour {
     }
 
     void Update() {
-        if (touchHandler) {
-            if (touchHandler.GetObjectsBeingTouched().Length > 0) {
 
-                //Debug.Log("touched");
-            }
-       
-        }
-   
     }
+
+    public void PauseGame() { 
+        if (isGameRunning) {
+            isGameRunning = false;
+            StopCoroutine(GameLoop());
+        }
+    }
+
+    public void ResumeGame() {
+        if (!isGameRunning) {
+            isGameRunning = true;
+            StartCoroutine(GameLoop());
+        }
+    }
+
+
+    IEnumerator GameLoop() {
+        while(isGameRunning) {
+            yield return null;
+        }
+    }
+
 
     //IEnumerator Fade() {
     //    int num = Random.Range(0, colors.Length);
