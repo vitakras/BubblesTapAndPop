@@ -33,14 +33,6 @@ public class BalloonPop : MonoBehaviour {
         ResumeTimeScale();
     }
 
-    public void DebugTouch(GameObject go) {
-        if (go == null) {
-            return;
-        
-        }
-        Debug.Log(go.tag);
-    }
-
 
     //IEnumerator Fade() {
     //    int num = Random.Range(0, colors.Length);
