@@ -14,36 +14,23 @@ public class BalloonPop : MonoBehaviour {
 
     private bool isGameRunning = false;
 
+    private float timeScale = -1f;
+
     // Use this for initialization
     void Start() {
-        text = init;
-       // active = colors[0];
-      //  StartCoroutine(Fade());
+        timeScale = -1;
     }
 
     void Update() {
 
     }
 
-    public void PauseGame() { 
-        if (isGameRunning) {
-            isGameRunning = false;
-            StopCoroutine(GameLoop());
-        }
+    public void PauseGame() {
+        PauseTimeScale();
     }
 
     public void ResumeGame() {
-        if (!isGameRunning) {
-            isGameRunning = true;
-            StartCoroutine(GameLoop());
-        }
-    }
-
-
-    IEnumerator GameLoop() {
-        while(isGameRunning) {
-            yield return null;
-        }
+        ResumeTimeScale();
     }
 
     public void DebugTouch(GameObject go) {
@@ -68,4 +55,17 @@ public class BalloonPop : MonoBehaviour {
     //    int num = Random.Range(0, colors.Length);
     //    return colors[num];
     //}
+
+    void PauseTimeScale() {
+        if (this.timeScale == -1) {
+            this.timeScale = Time.timeScale;
+        }
+        Time.timeScale = 0f;
+    }
+
+    void ResumeTimeScale() {
+        if (this.timeScale != -1) {
+            Time.timeScale = this.timeScale;
+        }
+    }
 }
