@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BubbleManager : MonoBehaviour {
 
     public BubbleColors availableColors;
+    public Spawner spawner;
 
     private bool paused = false;
     private Color selectedColor;
@@ -15,10 +14,12 @@ public class BubbleManager : MonoBehaviour {
 
     public void Pause() {
         paused = true;
+        spawner.StopSpawner();
     }
 
     public void Resume() {
         paused = false;
+        spawner.StartSpawner();
     }
 
     public void HandleClickedBubble(GameObject go) {

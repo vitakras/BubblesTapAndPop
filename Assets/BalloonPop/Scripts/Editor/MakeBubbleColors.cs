@@ -3,7 +3,7 @@ using UnityEditor;
 
 public class MakeBubbleColors {
 
-    [MenuItem("Assets/Create/My Scriptable Object")]
+    [MenuItem("Assets/Create/BubbleColors")]
     public static void CreateMyAsset() {
         BubbleColors asset = ScriptableObject.CreateInstance<BubbleColors>();
 
