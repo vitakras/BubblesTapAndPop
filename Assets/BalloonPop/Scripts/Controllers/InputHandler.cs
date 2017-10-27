@@ -12,6 +12,7 @@ public class InputHandler : MonoBehaviour, IPointerDownHandler {
     }
 
     public void OnPointerDown(PointerEventData eventData) {
+        Debug.Log(this.gameObject.name + " Was Clicked.");
         GameObject go = FindTouched2DGameObject(eventData);
         if (go != null) {
             onGameObjectFoundEvent.Invoke(go);

@@ -40,6 +40,8 @@ public class BubbleManager : MonoBehaviour {
             } else {
                 Debug.Log("You Lose");
             }
+
+            bubble.Pop();
         }
     }
 
