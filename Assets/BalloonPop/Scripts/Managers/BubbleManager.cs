@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class BubbleManager : MonoBehaviour {
 
+    public GameManager gameManager;
     public BubbleColors availableColors;
     public Spawner spawner;
     public Image activeBubbleImage;
@@ -38,7 +39,7 @@ public class BubbleManager : MonoBehaviour {
             if (bubble.Color == selectedColor) {
                 UpdateScore();
             } else {
-                Debug.Log("You Lose");
+                gameManager.EndGame();
             }
 
             bubble.Pop();
