@@ -11,7 +11,10 @@ public class ColorPicker : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        InvokeRepeating("RotateColors", colorRotateInterval, 0.3f);
+        InvokeRepeating("RotateColors", 0.3f, colorRotateInterval);
+        if (onColorSelected == null) {
+            onColorSelected = new UnityEvent();
+        }
     }
 
     public Color PickRandomColor() {
@@ -30,5 +33,6 @@ public class ColorPicker : MonoBehaviour {
 
     void RotateColors() {
         activeColor = PickRandomColor();
+        onColorSelected.Invoke();
     }
 }
