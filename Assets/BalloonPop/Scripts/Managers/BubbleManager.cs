@@ -8,6 +8,7 @@ public class BubbleManager : MonoBehaviour {
     public Spawner spawner;
     public Image activeBubbleImage;
     public Text scoreText;
+    public Score scoreManager;
 
     private bool paused = false;
     private Color selectedColor;
@@ -27,6 +28,11 @@ public class BubbleManager : MonoBehaviour {
     public void Resume() {
         paused = false;
         spawner.StartSpawner();
+    }
+
+    public void Reset() {
+        this.score = 0;
+        this.scoreText.text = "" + score;
     }
 
     public void HandleClickedBubble(GameObject go) {
@@ -67,6 +73,7 @@ public class BubbleManager : MonoBehaviour {
     void UpdateScore() {
         this.score++;
         this.scoreText.text = "" + score;
+        this.scoreManager.GameScore = this.score;
     }
 
     void PickRandomColor() {
