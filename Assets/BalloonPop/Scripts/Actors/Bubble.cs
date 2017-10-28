@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bubble : MonoBehaviour {
 
-    private new AudioSource audio;
+    public new AudioClip audio;
     private Color color;
     private new SpriteRenderer renderer;
     private PooledInstance pooledInstance;
@@ -13,7 +13,7 @@ public class Bubble : MonoBehaviour {
     void Awake() {
         FindRenderer();
         pooledInstance = GetComponent<PooledInstance>();
-        audio = GetComponent<AudioSource>();
+       // audio = GetComponent<AudioSource>();
     }
 
     public Color Color {
@@ -35,18 +35,12 @@ public class Bubble : MonoBehaviour {
 
     public void Pop() {
         if (this.audio != null) {
-            audio.Play();
-            StartCoroutine(PopBubble());   
+            AudioSource.PlayClipAtPoint(this.audio, this.transform.position);
         }
-    }
 
-    IEnumerator PopBubble() {
-        if (this.audio.isPlaying) {
-            yield return null;
+        pooledInstance = GetComponent<PooledInstance>();
+        if (pooledInstance != null) {
+            pooledInstance.Destory();
         }
-        //pooledInstance = GetComponent<PooledInstance>();
-        //if (pooledInstance != null) {
-        //    pooledInstance.Destory();
-        //}
     }
 }
