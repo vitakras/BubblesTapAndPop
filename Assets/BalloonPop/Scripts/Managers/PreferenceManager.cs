@@ -10,7 +10,9 @@ public class PreferenceManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         bubblePrefs = new BubblePrefs();
-        Load();	
+        Load();
+
+        score.SetHighScore(bubblePrefs.highscore);
 	}
 
     public void UpdateScore() {
