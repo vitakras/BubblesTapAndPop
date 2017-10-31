@@ -56,7 +56,9 @@ public class PooledPrefab : MonoBehaviour {
     }
 
     void SetAvailable(GameObject go) {
-        availableObjects.Push(go);
-        go.SetActive(false);
+        if (go.activeSelf) {
+            availableObjects.Push(go);
+            go.SetActive(false);
+        }
     }
 }
