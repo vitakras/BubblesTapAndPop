@@ -8,6 +8,8 @@ public class ColorPicker : MonoBehaviour {
     public UnityEvent onColorSelected;
 
     private Color activeColor;
+    private Color previousColor;
+    private bool allowPreviousColor;
 
     // Use this for initialization
     void Awake () {
@@ -27,11 +29,25 @@ public class ColorPicker : MonoBehaviour {
         }
     }
 
+    public bool AllowPreviousColor {
+        set {
+            allowPreviousColor = value;
+        }
+        get {
+            return allowPreviousColor;
+        }
+    }
+
     public bool IsActiveColor(Color color) {
+        if (allowPreviousColor) {
+            return (color == activeColor) || (color == previousColor);
+        }
+
         return color == activeColor;
     }
 
     void RotateColors() {
+        previousColor = activeColor;
         activeColor = PickRandomColor();
         onColorSelected.Invoke();
     }
