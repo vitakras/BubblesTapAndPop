@@ -8,7 +8,6 @@ public class GameOverPanel : MonoBehaviour {
     public Text highScore;
 
     public void UpdateScore() {
-        Debug.Log("called");
         this.gameScore.text = "" + score.GameScore;
         this.highScore.text = "BEST " + score.GetHighScore();
     }
