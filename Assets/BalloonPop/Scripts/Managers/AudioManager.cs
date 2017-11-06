@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour {
     private static string volumeString = "Volume";
 
     void Start() {
-            
+        SoundOn = false;
     }
 
     public bool SoundOn {
