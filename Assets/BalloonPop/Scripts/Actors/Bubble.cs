@@ -1,19 +1,18 @@
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class Bubble : MonoBehaviour {
 
-    public new AudioClip audio;
     private Color color;
     private new SpriteRenderer renderer;
     private PooledInstance pooledInstance;
+    private AudioSource audioSource;
 
     // Use this for initialization
     void Awake() {
         FindRenderer();
         pooledInstance = GetComponent<PooledInstance>();
-       // audio = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public Color Color {
@@ -34,13 +33,11 @@ public class Bubble : MonoBehaviour {
 
 
     public void Pop() {
-        if (this.audio != null) {
-            AudioSource.PlayClipAtPoint(this.audio, this.transform.position);
-        }
+        this.audioSource.Play();
 
         pooledInstance = GetComponent<PooledInstance>();
         if (pooledInstance != null) {
-            pooledInstance.Destory();
+            pooledInstance.Destory(this.audioSource.clip.length);
         }
     }
 }

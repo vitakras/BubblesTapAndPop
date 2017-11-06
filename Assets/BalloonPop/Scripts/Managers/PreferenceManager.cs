@@ -5,6 +5,7 @@ using UnityEngine;
 public class PreferenceManager : MonoBehaviour {
 
     public Score score;
+    public AudioManager audioManager;
     private BubblePrefs bubblePrefs; 
 
 	// Use this for initialization
