@@ -6,10 +6,11 @@ public class AudioManager : MonoBehaviour {
     public AudioMixer masterMixer;
     private bool soundOn;
 
-    private static string volumeString = "Volume";
+    private const string volumeString = "Volume";
+    private const string soundString = "sound"; 
 
     void Start() {
-        SoundOn = false;
+        Load();
     }
 
     public bool SoundOn {
@@ -23,11 +24,32 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    public void UpdateSound() {
+    void UpdateSound() {
         if (soundOn) {
             masterMixer.ClearFloat(volumeString);
         } else {
             masterMixer.SetFloat(volumeString, -80f);
+        }
+
+        Save();
+    }
+
+    void Save() {
+        int value = 0;
+        if (soundOn) {
+            value = 1;
+        }
+
+        PlayerPrefs.SetInt(soundString, value);
+    }
+
+    void Load() {
+        int value = PlayerPrefs.GetInt(soundString, 0);
+        
+        if (value == 1) {
+            SoundOn = true;
+        } else {
+            SoundOn = false;
         }
     }
 }
