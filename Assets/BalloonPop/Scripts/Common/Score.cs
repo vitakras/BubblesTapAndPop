@@ -9,7 +9,7 @@ public class Score : MonoBehaviour {
     private const string scoreString = "score";
 
     // Use this for initialization
-    void Awake() {
+    void Start() {
         if (onScoreUpdated == null) {
             onScoreUpdated = new IntegerEvent();
         }
@@ -46,11 +46,11 @@ public class Score : MonoBehaviour {
         this.highscore = 0;
     }
 
-    void Save() {
-        PlayerPrefs.SetInt(scoreString, highscore);
+    public void Load() {
+        highscore = PlayerPrefs.GetInt(scoreString, 0);
     }
 
-    void Load() {
-        highscore = PlayerPrefs.GetInt(scoreString, 0);
+    void Save() {
+        PlayerPrefs.SetInt(scoreString, highscore);
     }
 }
