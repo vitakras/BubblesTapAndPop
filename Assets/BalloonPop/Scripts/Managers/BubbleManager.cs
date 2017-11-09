@@ -7,7 +7,6 @@ public class BubbleManager : MonoBehaviour {
     public ColorPicker colorPicker;
     public Score scoreManager;
     public Spawner spawner;
-    public Text scoreText;
 
     private int score;
 
@@ -18,7 +17,6 @@ public class BubbleManager : MonoBehaviour {
 
     public void Reset() {
         this.score = 0;
-        this.scoreText.text = "" + score;
     }
 
     public void HandleClickedBubble(GameObject go) {
@@ -51,12 +49,10 @@ public class BubbleManager : MonoBehaviour {
 
     void ResetScore() {
         this.score = 0;
-        this.scoreText.text = "" + score;
     }
 
     void UpdateScore() {
         this.score++;
-        this.scoreText.text = "" + score;
         this.scoreManager.GameScore = this.score;
     }
 }

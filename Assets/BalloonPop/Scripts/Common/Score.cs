@@ -39,7 +39,7 @@ public class Score : MonoBehaviour {
     }
 
     public void ResetScore() {
-        this.score = 0;
+        this.GameScore = 0;
     }
 
     public void ResetHighScore() {
