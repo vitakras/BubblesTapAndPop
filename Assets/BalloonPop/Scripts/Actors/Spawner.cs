@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class Spawner : MonoBehaviour {
 
@@ -9,6 +10,9 @@ public class Spawner : MonoBehaviour {
     public GameObjectEvent onGameObjectSpawned;
 
     private bool usePooledInstance;
+    private WaitForSeconds startWait;
+    private WaitForSeconds spawnWait;
+    private WaitForSeconds waveWait;
 
     // Use this for initialization
     void Awake () {
@@ -22,16 +26,18 @@ public class Spawner : MonoBehaviour {
         } else {
             usePooledInstance = false;
         }
+
+        startWait = new WaitForSeconds(spawnObject.startWait);
+        spawnWait = new WaitForSeconds(spawnObject.spawnWait);
+        waveWait = new WaitForSeconds(spawnObject.waveWait);
     }
 
     public void StartSpawner() {
-        InvokeRepeating("SpawnObjects", 0.1f, spawnObject.spawnInternval);
+        StartCoroutine(SpawnWaves());
     }
 
     public void StopSpawner() {
-        if (IsInvoking("SpawnObjects")) {
-            CancelInvoke();
-        }
+        StopCoroutine(SpawnWaves());
     }
 
     void SpawnObjects() {
@@ -43,6 +49,40 @@ public class Spawner : MonoBehaviour {
             go = Instantiate(spawnObject.prefab);
         }
 
+        go.transform.parent = parent.transform;
+        go.transform.position = GetSpawnPosition();
+        go.SetActive(true);
+
+        onGameObjectSpawned.Invoke(go);
+    }
+
+    IEnumerator SpawnWaves() {
+        yield return startWait;
+
+        while(true) {
+            for(int i = 0; i < spawnObject.waveSpawnCount; i++) {
+                GameObject go = SpawnObject();
+                InitializeObject(go);
+                yield return spawnWait;
+            }
+            yield return waveWait;
+        }
+    }
+
+    GameObject SpawnObject() {
+        GameObject go;
+
+        if (usePooledInstance) {
+            go = pooledPrefab.GetInstance();
+        }
+        else {
+            go = Instantiate(spawnObject.prefab);
+        }
+
+        return go;
+    }
+
+    void InitializeObject(GameObject go) {
         go.transform.parent = parent.transform;
         go.transform.position = GetSpawnPosition();
         go.SetActive(true);

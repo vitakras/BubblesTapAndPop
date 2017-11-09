@@ -5,5 +5,8 @@ public class SpawnObject : ScriptableObject {
 
     public GameObject prefab;
     public bool pooled;
-    public float spawnInternval;
+    public int waveSpawnCount;
+    public float spawnWait;
+    public float startWait;
+    public float waveWait;
 }
