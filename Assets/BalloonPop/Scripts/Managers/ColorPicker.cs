@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ColorPicker : MonoBehaviour {
+public class ColorPicker : MonoBehaviour, IResetable {
 
     public BubbleColors availableColors;
     public float colorRotateInterval = 5f;
@@ -13,10 +13,23 @@ public class ColorPicker : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        InvokeRepeating("RotateColors", 0.3f, colorRotateInterval);
         if (onColorSelected == null) {
             onColorSelected = new UnityEvent();
         }
+
+        Enable();
+    }
+
+    public void Reset() {
+        CancelInvoke();
+    }
+
+    public void Disable() {
+       CancelInvoke();
+    }
+
+    public void Enable() {
+        InvokeRepeating("RotateColors", 0.3f, colorRotateInterval);
     }
 
     public Color PickRandomColor() {
@@ -50,5 +63,7 @@ public class ColorPicker : MonoBehaviour {
         previousColor = activeColor;
         activeColor = PickRandomColor();
         onColorSelected.Invoke();
+        Debug.Log("called");
     }
+
 }
