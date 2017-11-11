@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DifficultyManager : MonoBehaviour {
+public class DifficultyManager : MonoBehaviour, IResetable {
 
     public int increaseEvery = 2;
     public float increaseBy = 0.3f;
@@ -25,5 +25,11 @@ public class DifficultyManager : MonoBehaviour {
         if (bubbleSpeed.speed < bubbleSpeed.maxSpeed) {
             bubbleSpeed.speed += increaseBy;
         }
+    }
+
+    public void Disable() {
+    }
+
+    public void Enable() {
     }
 }
