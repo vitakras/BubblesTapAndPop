@@ -12,7 +12,6 @@ public class BubbleManager : MonoBehaviour {
 
     void Awake() {
         ResetScore();
-        spawner.StartSpawner();
     }
 
     public void Reset() {

@@ -23,6 +23,10 @@ public class GamePanel : MonoBehaviour {
         }
     }
 
+    public void Reset() {
+        this.activeColor.color = colorPicker.ActiveColor;
+    }
+
     IEnumerator BlinkToggle() {
         colorPicker.AllowPreviousColor = true;
         for(int i =0; i < blinkCount; i++) {

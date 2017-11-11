@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Spawner : MonoBehaviour {
+public class Spawner : MonoBehaviour, IResetable {
 
     public SpawnObject spawnObject;
     public GameObject parent;
@@ -13,6 +13,7 @@ public class Spawner : MonoBehaviour {
     private WaitForSeconds startWait;
     private WaitForSeconds spawnWait;
     private WaitForSeconds waveWait;
+    private bool isActive;
 
     // Use this for initialization
     void Awake () {
@@ -30,14 +31,33 @@ public class Spawner : MonoBehaviour {
         startWait = new WaitForSeconds(spawnObject.startWait);
         spawnWait = new WaitForSeconds(spawnObject.spawnWait);
         waveWait = new WaitForSeconds(spawnObject.waveWait);
+
+        StartSpawner();
+    }
+
+    public void Reset() {
+    }
+
+    public void Disable() {
+        StopSpawner();
+    }
+
+    public void Enable() {
+        StartSpawner();
     }
 
     public void StartSpawner() {
-        StartCoroutine(SpawnWaves());
+        if (!isActive) {
+            isActive = true;
+            StartCoroutine(SpawnWaves());
+        }
     }
 
     public void StopSpawner() {
-        StopCoroutine(SpawnWaves());
+        if (isActive) {
+            isActive = false;
+            StopCoroutine(SpawnWaves());
+        }
     }
 
     void SpawnObjects() {
@@ -59,7 +79,7 @@ public class Spawner : MonoBehaviour {
     IEnumerator SpawnWaves() {
         yield return startWait;
 
-        while(true) {
+        while(isActive) {
             for(int i = 0; i < spawnObject.waveSpawnCount; i++) {
                 GameObject go = SpawnObject();
                 InitializeObject(go);
