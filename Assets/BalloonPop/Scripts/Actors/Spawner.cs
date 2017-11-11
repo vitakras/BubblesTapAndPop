@@ -49,6 +49,7 @@ public class Spawner : MonoBehaviour, IResetable {
     public void StartSpawner() {
         if (!isActive) {
             isActive = true;
+            StopAllCoroutines();
             StartCoroutine(SpawnWaves());
         }
     }
@@ -56,7 +57,7 @@ public class Spawner : MonoBehaviour, IResetable {
     public void StopSpawner() {
         if (isActive) {
             isActive = false;
-            StopCoroutine(SpawnWaves());
+            StopAllCoroutines();
         }
     }
 
