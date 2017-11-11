@@ -1,18 +1,21 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 public class ColorPicker : MonoBehaviour, IResetable {
 
     public BubbleColors availableColors;
-    public float colorRotateInterval = 5f;
+    public float colorMinRotateInterval = 5f;
+    public float colorMaxRotateInternal = 10f;
     public UnityEvent onColorSelected;
 
     private Color activeColor;
     private Color previousColor;
     private bool allowPreviousColor;
+    private bool isActive;
 
     // Use this for initialization
-    void Awake () {
+    void Awake() {
         if (onColorSelected == null) {
             onColorSelected = new UnityEvent();
         }
@@ -21,15 +24,21 @@ public class ColorPicker : MonoBehaviour, IResetable {
     }
 
     public void Reset() {
-        CancelInvoke();
+        Disable();
     }
 
     public void Disable() {
-       CancelInvoke();
+        if (isActive) {
+            isActive = false;
+            StopCoroutine(RotateColors());
+        }
     }
 
     public void Enable() {
-        InvokeRepeating("RotateColors", 0.3f, colorRotateInterval);
+        if (!isActive) {
+            isActive = true;
+            StartCoroutine(RotateColors());
+        }
     }
 
     public Color PickRandomColor() {
@@ -59,11 +68,18 @@ public class ColorPicker : MonoBehaviour, IResetable {
         return color == activeColor;
     }
 
-    void RotateColors() {
-        previousColor = activeColor;
-        activeColor = PickRandomColor();
-        onColorSelected.Invoke();
-        Debug.Log("called");
+    IEnumerator RotateColors() {
+        while (isActive) {
+            previousColor = activeColor;
+            activeColor = PickRandomColor();
+            onColorSelected.Invoke();
+
+            yield return new WaitForSeconds(GetRotateInterval());
+        }
+    }
+
+    float GetRotateInterval() {
+        return Random.Range(colorMinRotateInterval, colorMaxRotateInternal);
     }
 
 }
