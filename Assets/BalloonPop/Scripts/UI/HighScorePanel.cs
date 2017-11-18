@@ -12,6 +12,10 @@ public class HighScorePanel : MonoBehaviour {
         UpdateHighScore();    
     }
 
+    void OnEnable() {
+        UpdateHighScore();
+    }
+
     public void UpdateHighScore() {
         this.highScoreText.text = string.Format("{0}{1}", prefix, score.GetHighScore());
     }
