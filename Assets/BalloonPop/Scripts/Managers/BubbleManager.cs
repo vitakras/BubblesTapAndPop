@@ -43,7 +43,7 @@ public class BubbleManager : MonoBehaviour {
     }
 
     void UpdateBubbleColor(Bubble bubble) {
-        bubble.Color = colorPicker.PickRandomColor();
+        bubble.Color = colorPicker.PickRandomColorWithProbability();
     }
 
     void ResetScore() {
