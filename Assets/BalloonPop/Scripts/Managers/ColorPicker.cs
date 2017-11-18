@@ -12,14 +12,14 @@ public class ColorPicker : MonoBehaviour, IResetable {
     private Color activeColor;
     private Color previousColor;
     private bool allowPreviousColor;
-    private bool isActive;
+    private IEnumerator colorPicker;
 
     // Use this for initialization
     void Awake() {
         if (onColorSelected == null) {
             onColorSelected = new UnityEvent();
         }
-
+        activeColor = PickRandomColor();
         Enable();
     }
 
@@ -28,16 +28,16 @@ public class ColorPicker : MonoBehaviour, IResetable {
     }
 
     public void Disable() {
-        if (isActive) {
-            isActive = false;
-            StopCoroutine(RotateColors());
+        if (colorPicker != null) {
+            StopCoroutine(colorPicker);
+            colorPicker = null;
         }
     }
 
     public void Enable() {
-        if (!isActive) {
-            isActive = true;
-            StartCoroutine(RotateColors());
+        if (colorPicker == null) {
+            colorPicker = RotateColors();
+            StartCoroutine(colorPicker);
         }
     }
 
@@ -69,12 +69,11 @@ public class ColorPicker : MonoBehaviour, IResetable {
     }
 
     IEnumerator RotateColors() {
-        while (isActive) {
+        while (true) {
+            yield return new WaitForSeconds(GetRotateInterval());
             previousColor = activeColor;
             activeColor = PickRandomColor();
             onColorSelected.Invoke();
-
-            yield return new WaitForSeconds(GetRotateInterval());
         }
     }
 

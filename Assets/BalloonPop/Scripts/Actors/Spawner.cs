@@ -13,10 +13,10 @@ public class Spawner : MonoBehaviour, IResetable {
     private WaitForSeconds startWait;
     private WaitForSeconds spawnWait;
     private WaitForSeconds waveWait;
-    private bool isActive;
+    private IEnumerator spawner;
 
     // Use this for initialization
-    void Awake () {
+    void Awake() {
         if (onGameObjectSpawned == null) {
             onGameObjectSpawned = new GameObjectEvent();
         }
@@ -24,7 +24,8 @@ public class Spawner : MonoBehaviour, IResetable {
         if (spawnObject.pooled && pooledPrefab != null) {
             pooledPrefab.prefab = spawnObject.prefab;
             usePooledInstance = true;
-        } else {
+        }
+        else {
             usePooledInstance = false;
         }
 
@@ -47,17 +48,16 @@ public class Spawner : MonoBehaviour, IResetable {
     }
 
     public void StartSpawner() {
-        if (!isActive) {
-            isActive = true;
-            StopAllCoroutines();
-            StartCoroutine(SpawnWaves());
+        if (spawner == null) {
+            spawner = SpawnWaves();
+            StartCoroutine(spawner);
         }
     }
 
     public void StopSpawner() {
-        if (isActive) {
-            isActive = false;
-            StopAllCoroutines();
+        if (spawner != null) {
+            StopCoroutine(spawner);
+            spawner = null;
         }
     }
 
@@ -66,7 +66,8 @@ public class Spawner : MonoBehaviour, IResetable {
 
         if (usePooledInstance) {
             go = pooledPrefab.GetInstance();
-        } else {
+        }
+        else {
             go = Instantiate(spawnObject.prefab);
         }
 
@@ -80,8 +81,8 @@ public class Spawner : MonoBehaviour, IResetable {
     IEnumerator SpawnWaves() {
         yield return startWait;
 
-        while(isActive) {
-            for(int i = 0; i < spawnObject.waveSpawnCount; i++) {
+        while (true) {
+            for (int i = 0; i < spawnObject.waveSpawnCount; i++) {
                 GameObject go = SpawnObject();
                 InitializeObject(go);
                 yield return spawnWait;

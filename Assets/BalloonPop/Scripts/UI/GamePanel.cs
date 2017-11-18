@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GamePanel : MonoBehaviour, IResetable {
+public class GamePanel : MonoBehaviour {
 
     public int blinkCount = 3;
     public float blinkInternal = 0.3f;
@@ -10,51 +10,54 @@ public class GamePanel : MonoBehaviour, IResetable {
     public ColorPicker colorPicker;
 
     private WaitForSeconds wait;
-    private bool isActive;
-    private bool colorSet;
+    private IEnumerator blinkToggle;
 
     void Awake() {
         wait = new WaitForSeconds(blinkInternal);
-        Enable();
+    }
+
+    void OnEnable() {
+        UpdateColor();
+        Debug.Log("started Game Panel");
+    }
+
+    void OnDisable() {
+        if (blinkToggle != null) {
+            StopCoroutine(blinkToggle);
+            blinkToggle = null;
+        }
     }
 
     public void UpdateActiveColor() {
         if (gameObject.activeSelf && this.activeColor) {
-            StartCoroutine(BlinkToggle());
+            if (blinkToggle != null) {
+                StopCoroutine(blinkToggle);
+            }
+
+            blinkToggle = BlinkToggle();
+            StartCoroutine(blinkToggle);
         }
         else {
-            this.activeColor.color = colorPicker.ActiveColor;
+            UpdateColor();
         }
-    }
-
-    public void Reset() {
-        this.colorSet = false;
-        this.activeColor.color = colorPicker.ActiveColor;
-    }
-
-    public void Disable() {
-        this.isActive = false;
-    }
-
-    public void Enable() {
-        this.isActive = true;
-        Reset();
     }
 
     IEnumerator BlinkToggle() {
         colorPicker.AllowPreviousColor = true;
 
-        if (colorSet) {
-            for (int i = 0; i < blinkCount; i++) {
-                activeColor.enabled = false;
-                yield return wait;
-                activeColor.enabled = true;
-                yield return wait;
-            }
+        for (int i = 0; i < blinkCount; i++) {
+            activeColor.enabled = false;
+            yield return wait;
+            activeColor.enabled = true;
+            yield return wait;
         }
 
-        this.activeColor.color = colorPicker.ActiveColor;
+        UpdateColor();
         colorPicker.AllowPreviousColor = false;
-        colorSet = true;
+    }
+
+    void UpdateColor() {
+        this.activeColor.color = colorPicker.ActiveColor;
+        Debug.Log(this.activeColor.color);
     }
 }
