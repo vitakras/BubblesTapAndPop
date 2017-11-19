@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour {
     }
 
     public void EndGame() {
-        Debug.Log("Ending Game");
         foreach (IResetable resetable in resetables) {
             resetable.Disable();
         }
