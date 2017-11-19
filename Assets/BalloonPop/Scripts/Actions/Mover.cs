@@ -13,9 +13,7 @@ public class Mover : MonoBehaviour {
 
     // Update is called once per frame
     void FixedUpdate() {
-        float speed = this.bubbleSpeed.speed * Time.deltaTime;
-        //transform.Translate(direction * speed, Space.World);
-
-        rb.MovePosition(transform.position + direction * speed);
+        Vector3 offset = direction * bubbleSpeed.speed * Time.fixedDeltaTime;
+        rb.MovePosition(transform.position + offset);
     }
 }
