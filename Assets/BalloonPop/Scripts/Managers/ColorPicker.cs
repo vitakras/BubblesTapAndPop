@@ -53,7 +53,6 @@ public class ColorPicker : MonoBehaviour, IResetable {
         }
 
         int index = RandomWithProbability(selectColorProbability);
-        Debug.Log(index);
         return availableColors.colors[index];
     }
 
