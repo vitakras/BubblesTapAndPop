@@ -85,9 +85,9 @@ public class Spawner : MonoBehaviour, IResetable {
             for (int i = 0; i < spawnObject.waveSpawnCount; i++) {
                 GameObject go = SpawnObject();
                 InitializeObject(go);
-                yield return spawnWait;
+                yield return new WaitForSeconds(spawnObject.waveWait);
             }
-            yield return waveWait;
+            //yield return waveWait;
         }
     }
 
